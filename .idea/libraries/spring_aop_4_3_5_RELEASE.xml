@@ -1,0 +1,34 @@
+<component name="libraryTable">
+  <library name="spring-aop-4.3.5.RELEASE">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-aop-4.3.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-beans-4.3.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-core-4.3.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-expression-4.3.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-jdbc-4.3.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-orm-4.3.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-oxm-4.3.5.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-web-4.3.5.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-aop-4.3.5.RELEASE-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-beans-4.3.5.RELEASE-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-core-4.3.5.RELEASE-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-expression-4.3.5.RELEASE-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-jdbc-4.3.5.RELEASE-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-orm-4.3.5.RELEASE-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-oxm-4.3.5.RELEASE-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-web-4.3.5.RELEASE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-aop-4.3.5.RELEASE-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-beans-4.3.5.RELEASE-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-core-4.3.5.RELEASE-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-expression-4.3.5.RELEASE-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-jdbc-4.3.5.RELEASE-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-orm-4.3.5.RELEASE-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-oxm-4.3.5.RELEASE-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/Spring/spring-web-4.3.5.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

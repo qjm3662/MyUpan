@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="cn.qjm253.Entity.UserEntity" table="user" schema="my_upan" lazy="false">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="username">
+            <column name="username" sql-type="varchar(20)" length="20"/>
+        </property>
+        <property name="avatar">
+            <column name="avatar" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar(20)" length="20"/>
+        </property>
+        <property name="nickname">
+            <column name="nickname" sql-type="varchar(20)" length="20"/>
+        </property>
+        <property name="signature">
+            <column name="signature" sql-type="varchar(200)" length="200"/>
+        </property>
+        <property name="sex">
+            <column name="sex" sql-type="int(11)"/>
+        </property>
+        <!--<list name="shares">-->
+            <!--<key column="id" not-null="true"/>-->
+            <!--<list-index column="list_order"/>-->
+            <!--<one-to-many class="cn.qjm253.Entity.FileEntity"/>-->
+        <!--</list>-->
+        <set name="shares" inverse="true">
+            <key column="owner_id"/>
+            <one-to-many class="cn.qjm253.Entity.FileEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

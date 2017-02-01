@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="cn.qjm253.Entity.FileEntity" table="file" schema="my_upan">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="fileName">
+            <column name="fileName" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="fileSize">
+            <column name="fileSize" sql-type="float" precision="-1"/>
+        </property>
+        <property name="identifyCode">
+            <column name="identifyCode" sql-type="varchar(6)" length="6"/>
+        </property>
+        <property name="createTime">
+            <column name="createTime" sql-type="mediumtext"/>
+        </property>
+        <property name="updateTime">
+            <column name="updateTime" sql-type="mediumtext"/>
+        </property>
+        <property name="isPublic">
+            <column name="isPublic" sql-type="tinyint(1)"/>
+        </property>
+        <property name="downloadCount">
+            <column name="downloadCount" sql-type="int(11)"/>
+        </property>
+        <many-to-one name="owner" class="cn.qjm253.Entity.UserEntity" column="owner_id" not-null="true"/>
+    </class>
+</hibernate-mapping>

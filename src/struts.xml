@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <!--制定全局国际化资源文件-->
+    <constant name="struts.custom.i18n.resources" value="mess"/>
+    <!--制定国际化编码所使用的字符集-->
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <!-- 设置为调试模式 -->
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.multipart.maxSize" value="102400000"/>
+
+
+    <package name="cn.qjm253" extends="json-default">
+        <interceptors>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="cookie">
+                    <param name="cookiesName">username</param>
+                    <param name="cookiesValue">*</param>
+                </interceptor-ref>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <!--使得该包全局可使用的通配符-->
+        <global-allowed-methods> regex:.*</global-allowed-methods>
+
+        <!--登录配置-->
+        <action name="LoginAction" class="cn.qjm253.Action.LoginAction" method="login">
+            <interceptor-ref name="myStack"/>
+            <result name="success" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+
+        <!--注册配置-->
+        <action name="RegisterAction" class="cn.qjm253.Action.RegisterAction" method="register">
+            <result name="success" type="json">
+                <param name="includeProperties">code,avatar</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code,errorMsg</param>
+            </result>
+        </action>
+
+        <!--下载配置-->
+        <action name="download" class="cn.qjm253.Action.FileDownloadAction">
+            <result name="success" type="stream">
+                <!--指定文件的下载类型-->
+                <param name="contentType">image/jpg</param>
+                <param name="inputName">targetFile</param>
+                <param name="contentDisposition">filename="fsdfg.jpg"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+        </action>
+
+        <!--获取用户信息配置-->
+        <action name="GetUserInfoAction" class="cn.qjm253.Action.GetUserInfoAction" method="getUserInfo">
+            <result name="success" type="json">
+                <param name="includeProperties">username, avatar, nickname, signature, sex, code, shares\[\d+\]\.id, shares\[\d+\]\.fileName, shares\[\d+\]\.fileSize,
+                    shares\[\d+\]\.identifyCode, shares\[\d+\]\.createTime, shares\[\d+\]\.updateTime, shares\[\d+\]\.isPublic, shares\[\d+\]\.downloadCount
+                </param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+
+        <!--修改用户信息配置、-->
+        <action name="ModifyUserInfoAction" class="cn.qjm253.Action.ModifyUserInfoAction" method="modifyUserInfo">
+            <result name="success" type="json">
+                <param name="includeProperties">
+                    code
+                </param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+
+        <!--上传文件配置-->
+        <action name="UploadAction" class="cn.qjm253.Action.UploadAction" method="upload">
+            <!--配置fileUpload的拦截器-->
+            <interceptor-ref name="fileUpload">
+                <!--配置允许上传的文件类型-->
+                <param name="allowedTypes">*/*</param>
+                <!--配置允许上传的文件大小-->
+                <param name="maximumSize">102400000</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+
+            <param name="savePath">/WEB-INF/upload</param>
+            <result name="success" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+            <!--当上传文件的类型为不允许的类型时会返回以下结果-->
+            <result name="input" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+        </action>
+    </package>
+</struts>
