@@ -29,6 +29,9 @@
         <property name="downloadCount">
             <column name="downloadCount" sql-type="int(11)"/>
         </property>
+        <property name="saveName">
+            <column name="saveName" sql-type="varchar(100)" length="100"/>
+        </property>
         <many-to-one name="owner" class="cn.qjm253.Entity.UserEntity" column="owner_id" not-null="true"/>
     </class>
 </hibernate-mapping>

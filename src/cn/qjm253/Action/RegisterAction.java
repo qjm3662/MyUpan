@@ -1,6 +1,6 @@
 package cn.qjm253.Action;
 
-import cn.qjm253.Controll.Judge;
+import cn.qjm253.Controll.HibernateOperator;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -64,7 +64,7 @@ public class RegisterAction extends ActionSupport{
 
     public String register() throws Exception{
         System.out.println("sex : " + getSex());
-        setCode(Judge.registerJudge(username, password, 1));
+        setCode(HibernateOperator.registerJudge(username, password, 1));
         setAvatar("http://192.168.1.15:8080/download?fileName=default_avatar.jpg");
         setSex(1);      //默认为Man
         System.out.println(getAvatar());

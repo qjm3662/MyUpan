@@ -1,5 +1,6 @@
 package cn.qjm253.util;
 
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -14,5 +15,18 @@ public class UUIDUtil {
     //剔除标识码
     public static String deleteUUID(String msg){
         return msg.substring(36, msg.length());
+    }
+
+    //生成随机字符串
+    public static String getRandomString(int length){
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuffer buf = new StringBuffer();
+        int num;
+        for(int i = 0; i < length; i++){
+            num = random.nextInt(62);
+            buf.append(str.charAt(num));
+        }
+        return buf.toString();
     }
 }

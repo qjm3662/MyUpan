@@ -8,25 +8,45 @@ public class FileEntity {
     private String fileName;
     private double fileSize;
     private String identifyCode;
-    private String createTime;
-    private String updateTime;
+    private long createTime;
+    private long updateTime;
     private UserEntity owner;
     private int downloadCount;
     private byte isPublic;
+    private String saveName;    //包含了UUID码的文件名
+
+    public String getSaveName() {
+        return saveName;
+    }
+
+    public void setSaveName(String saveName) {
+        this.saveName = saveName;
+    }
 
     public FileEntity(){
 
     }
 
-    public FileEntity(String fileName, double fileSize, String fileCode, long createTime, long updateTime, UserEntity owner, byte isPublic) {
+    public FileEntity(String fileName, double fileSize, String identifyCode, long createTime, long updateTime, UserEntity owner, byte isPublic, String saveName) {
         this.fileName = fileName;
         this.fileSize = fileSize;
-        this.identifyCode = fileCode;
-        this.createTime = String.valueOf(createTime);
-        this.updateTime = String.valueOf(updateTime);
+        this.identifyCode = identifyCode;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
         this.owner = owner;
         this.isPublic = isPublic;
+        this.saveName = saveName;
     }
+
+//    public FileEntity(String fileName, double fileSize, String fileCode, long createTime, long updateTime, UserEntity owner, byte isPublic) {
+//        this.fileName = fileName;
+//        this.fileSize = fileSize;
+//        this.identifyCode = fileCode;
+//        this.createTime = String.valueOf(createTime);
+//        this.updateTime = String.valueOf(updateTime);
+//        this.owner = owner;
+//        this.isPublic = isPublic;
+//    }
 
     public int getDownloadCount() {
         return downloadCount;
@@ -68,19 +88,19 @@ public class FileEntity {
         this.identifyCode = identifyCode;
     }
 
-    public String getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
-    public String getUpdateTime() {
+    public long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(String updateTime) {
+    public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -112,8 +132,6 @@ public class FileEntity {
         if (isPublic != that.isPublic) return false;
         if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
         if (identifyCode != null ? !identifyCode.equals(that.identifyCode) : that.identifyCode != null) return false;
-        if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
-        if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
         if (owner != null ? !owner.equals(that.owner) : that.owner != null) return false;
 
         return true;
@@ -128,8 +146,8 @@ public class FileEntity {
         temp = Double.doubleToLongBits(fileSize);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (identifyCode != null ? identifyCode.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
+//        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+//        result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         result = 31 * result + (owner != null ? owner.hashCode() : 0);
         result = 31 * result + (int) isPublic;
         return result;

@@ -12,10 +12,10 @@
     <!-- 设置为调试模式 -->
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
-    <constant name="struts.multipart.maxSize" value="102400000"/>
+    <constant name="struts.multipart.maxSize" value="534288000"/>
 
 
-    <package name="cn.qjm253" extends="json-default">
+    <package name="cn.qjm253" extends="json-default" namespace="/">
         <interceptors>
             <interceptor-stack name="myStack">
                 <interceptor-ref name="cookie">
@@ -26,12 +26,14 @@
             </interceptor-stack>
         </interceptors>
 
+        <default-interceptor-ref name="myStack"/>
+
         <!--使得该包全局可使用的通配符-->
         <global-allowed-methods> regex:.*</global-allowed-methods>
 
         <!--登录配置-->
         <action name="LoginAction" class="cn.qjm253.Action.LoginAction" method="login">
-            <interceptor-ref name="myStack"/>
+            <!--<interceptor-ref name="myStack"/>-->
             <result name="success" type="json">
                 <param name="includeProperties">code</param>
             </result>
@@ -91,8 +93,8 @@
             <interceptor-ref name="fileUpload">
                 <!--配置允许上传的文件类型-->
                 <param name="allowedTypes">*/*</param>
-                <!--配置允许上传的文件大小-->
-                <param name="maximumSize">102400000</param>
+                <!--配置允许上传的文件大小500MB-->
+                <param name="maximumSize">534288000</param>
             </interceptor-ref>
             <interceptor-ref name="defaultStack"/>
 
@@ -106,6 +108,65 @@
             </result>
             <result name="error" type="json">
                 <param name="includeProperties">code</param>
+            </result>
+        </action>
+        <action name="testAction" class="Test.TestAction" method="test">
+            <result type="json">
+                <param name="includeProperties">session</param>
+            </result>
+        </action>
+    </package>
+
+
+    <package name="cn.qjm253.download" extends="json-default" namespace="/download">
+        <!--<interceptors>-->
+            <!--<interceptor-stack name="myStack">-->
+                <!--<interceptor-ref name="cookie">-->
+                    <!--<param name="cookiesName">username</param>-->
+                    <!--<param name="cookiesValue">*</param>-->
+                <!--</interceptor-ref>-->
+                <!--<interceptor-ref name="defaultStack"/>-->
+            <!--</interceptor-stack>-->
+        <!--</interceptors>-->
+        <action name="*" class="cn.qjm253.Action.FileDownloadAction">
+            <!--<interceptor-ref name="myStack"/>-->
+            <result name="success" type="stream">
+                <!--指定文件的下载类型-->
+                <param name="contentType">*/*</param>
+                <param name="inputName">targetFile</param>
+                <param name="contentDisposition">filename="${fileName}"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+        </action>
+    </package>
+
+    <package name="cn.qjm253.getUserInfo" extends="json-default" namespace="/GetFileInfoAction">
+        <interceptors>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="cookie">
+                    <param name="cookiesName">username</param>
+                    <param name="cookiesValue">*</param>
+                </interceptor-ref>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <action name="*" class="cn.qjm253.Action.GetFileInfoAction" method="getFileInfo">
+            <interceptor-ref name="myStack"/>
+            <result name="success" type="json">
+                <param name="includeProperties">
+                    code, fileName, fileSize, identifyCode, createTime, updateTime,
+                    downloadCount, isPublic, owner\.username, owner\.avatar,
+                    owner\.nickname, owner\.signature, owner\.sex
+                </param>
+            </result>
+            <result name="success_but_not_login" type="json">
+                <param name="includeProperties">
+                    code, fileName, fileSize, identifyCode, createTime, updateTime,
+                    downloadCount, isPublic
+                </param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMsg</param>
             </result>
         </action>
     </package>

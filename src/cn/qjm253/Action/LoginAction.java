@@ -1,6 +1,6 @@
 package cn.qjm253.Action;
 
-import cn.qjm253.Controll.Judge;
+import cn.qjm253.Controll.HibernateOperator;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.*;
@@ -51,11 +51,12 @@ public class LoginAction extends ActionSupport implements CookiesAware, SessionA
     }
 
     public String login(){
-        setCode(Judge.loginJudge(username, password));
+        setCode(HibernateOperator.loginJudge(username, password));
         switch (getCode()){
             case CodeMSG.ALREADY_LOGIN:     //登录成功
                 Cookie cookie = new Cookie("username", username);
-                cookie.setMaxAge(10);
+                //设置Cookie的有效期为一天，单位为秒
+                cookie.setMaxAge(60 * 60 * 24);
                 ServletActionContext.getResponse().addCookie(cookie);
                 return SUCCESS;
             case CodeMSG.USERNAME_OR_PASSWORD_ERROR:case CodeMSG.USERNAME_NOT_EXISTS:

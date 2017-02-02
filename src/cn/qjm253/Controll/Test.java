@@ -3,6 +3,7 @@ package cn.qjm253.Controll;
 import cn.qjm253.Entity.FileEntity;
 import cn.qjm253.Entity.UserEntity;
 import cn.qjm253.util.HibernateUtil;
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -14,9 +15,9 @@ import java.util.List;
  */
 public class Test {
     public static void main(String[] args) {
-//        System.out.println(Judge.registerJudge("Robbin1", "123456", 2));
-        Session session = HibernateUtil.currentSession();
-        Transaction t = session.beginTransaction();
+//        System.out.println(HibernateOperator.registerJudge("Robbin1", "123456", 2));
+//        Session session = HibernateUtil.currentSession();
+//        Transaction t = session.beginTransaction();
 //        List list = session.createQuery("from UserEntity u where u.username = :usn")
 //                .setParameter("usn", "Ronn")
 //                .list();
@@ -45,8 +46,29 @@ public class Test {
 //        FileEntity fileEntity = new FileEntity("Ronn", 1024, "325225", System.currentTimeMillis(), System.currentTimeMillis(),
 //                newUser, (byte) 1);
 //        session.persist(fileEntity);
+//        t.commit();
+//        HibernateUtil.closeSession();
+
+
+        Session session = HibernateUtil.currentSession();
+        List list = session.createQuery("from UserEntity u where u.username = :usn")
+                .setParameter("usn", "Robbin")
+                .list();
+        UserEntity user = (UserEntity) list.get(0);
+        System.out.println(user.toString());
+        System.out.println(user.getShares().size());
+//        FileEntity fileEntity = new FileEntity("《想你所想》", 1024, "347211", System.currentTimeMillis(), System.currentTimeMillis(), user, (byte) 1);
+//        session.persist(fileEntity);
+//        HibernateUtil.closeSession();
+
+
+//        Session s = HibernateUtil.currentSession();
+        Transaction t = session.beginTransaction();
+//        FileEntity fileEntity = new FileEntity("《想你所想》", 1024, "347211", System.currentTimeMillis(), System.currentTimeMillis(), user, (byte) 1);
+//        session.persist(fileEntity);
         t.commit();
         HibernateUtil.closeSession();
+
     }
 
 }
