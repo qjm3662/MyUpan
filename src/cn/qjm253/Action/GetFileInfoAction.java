@@ -1,5 +1,6 @@
 package cn.qjm253.Action;
 
+import cn.qjm253.Controll.CodeMSG;
 import cn.qjm253.Controll.HibernateOperator;
 import cn.qjm253.Entity.FileEntity;
 import cn.qjm253.Entity.UserEntity;
@@ -106,7 +107,7 @@ public class GetFileInfoAction extends ActionSupport{
         String[] s = ServletActionContext.getRequest().getServletPath().split("/");
         setIdentifyCode(s[s.length - 1]);
         System.out.println(getIdentifyCode());
-        FileEntity fileEntity = HibernateOperator.getFileInfoByIdentifyCode(getIdentifyCode());
+        FileEntity fileEntity = HibernateOperator.getFileInfoByIdentifyCode(getIdentifyCode(), 2);
         if(fileEntity == null){
             setCode(CodeMSG.CODE_ERROR);
             setErrMsg(CodeMSG.getCodeMSG(getCode()));

@@ -50,25 +50,29 @@ public class Test {
 //        HibernateUtil.closeSession();
 
 
-        Session session = HibernateUtil.currentSession();
-        List list = session.createQuery("from UserEntity u where u.username = :usn")
-                .setParameter("usn", "Robbin")
-                .list();
-        UserEntity user = (UserEntity) list.get(0);
-        System.out.println(user.toString());
-        System.out.println(user.getShares().size());
-//        FileEntity fileEntity = new FileEntity("《想你所想》", 1024, "347211", System.currentTimeMillis(), System.currentTimeMillis(), user, (byte) 1);
-//        session.persist(fileEntity);
+//        Session session = HibernateUtil.currentSession();
+//        List list = session.createQuery("from UserEntity u where u.username = :usn")
+//                .setParameter("usn", "Robbin")
+//                .list();
+//        UserEntity user = (UserEntity) list.get(0);
+//        System.out.println(user.toString());
+//        System.out.println(user.getShares().size());
+////        FileEntity fileEntity = new FileEntity("《想你所想》", 1024, "347211", System.currentTimeMillis(), System.currentTimeMillis(), user, (byte) 1);
+////        session.persist(fileEntity);
+////        HibernateUtil.closeSession();
+//
+//
+////        Session s = HibernateUtil.currentSession();
+//        Transaction t = session.beginTransaction();
+////        FileEntity fileEntity = new FileEntity("《想你所想》", 1024, "347211", System.currentTimeMillis(), System.currentTimeMillis(), user, (byte) 1);
+////        session.persist(fileEntity);
+//        t.commit();
 //        HibernateUtil.closeSession();
 
 
-//        Session s = HibernateUtil.currentSession();
-        Transaction t = session.beginTransaction();
-//        FileEntity fileEntity = new FileEntity("《想你所想》", 1024, "347211", System.currentTimeMillis(), System.currentTimeMillis(), user, (byte) 1);
-//        session.persist(fileEntity);
-        t.commit();
-        HibernateUtil.closeSession();
-
+//        HibernateOperator.followSb("Robbin", "15880677611");
+        HibernateOperator.unFollowSb("Robbin", "15880677610");
+//        HibernateOperator.followSb("Robbin", "Robbin");
     }
 
 }

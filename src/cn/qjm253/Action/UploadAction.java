@@ -1,7 +1,7 @@
 package cn.qjm253.Action;
 
+import cn.qjm253.Controll.CodeMSG;
 import cn.qjm253.Controll.HibernateOperator;
-import cn.qjm253.util.HibernateUtil;
 import cn.qjm253.util.UUIDUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
@@ -9,7 +9,6 @@ import org.apache.struts2.ServletActionContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.UUID;
 
 /**
  * Created by qjm3662 on 2017/1/31.
@@ -18,9 +17,27 @@ public class UploadAction extends ActionSupport{
     private File file;    //上传文件
     private String fileContentType;   //上传文件类型
     private String fileFileName;  //上传文件名
+    private byte share;     //是否分享
     private int code = -1;
     private String errMSG = "该类型的文件不允许上传";
     private String username = "Robbin";
+    private String identifyCode;
+
+    public byte getShare() {
+        return share;
+    }
+
+    public void setShare(byte share) {
+        this.share = share;
+    }
+
+    public String getIdentifyCode() {
+        return identifyCode;
+    }
+
+    public void setIdentifyCode(String identifyCode) {
+        this.identifyCode = identifyCode;
+    }
 
     public String getUsername() {
         return username;
@@ -91,12 +108,14 @@ public class UploadAction extends ActionSupport{
         FileInputStream fis = new FileInputStream(getFile());
         byte[] buffer = new byte[1024];
         int len = 0;
-        int fileSize = 0;
+        double fileSize = 0;
         while((len = fis.read(buffer)) > 0){
             fileSize += len;
             fos.write(buffer,0, len);
         }
-        HibernateOperator.saveFile(getFileFileName(), saveName, fileSize, (byte)1, username);
+        //化成以 MB 为单位存储
+        fileSize = fileSize / (1024 * 1024);
+        setIdentifyCode(HibernateOperator.saveFile(getFileFileName(), saveName, fileSize, (byte)1, username));
         System.out.println(toString());
         setCode(CodeMSG.ALREADY_LOGIN);
         return SUCCESS;

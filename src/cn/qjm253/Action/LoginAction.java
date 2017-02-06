@@ -1,5 +1,6 @@
 package cn.qjm253.Action;
 
+import cn.qjm253.Controll.CodeMSG;
 import cn.qjm253.Controll.HibernateOperator;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
@@ -71,6 +72,9 @@ public class LoginAction extends ActionSupport implements CookiesAware, SessionA
     @Override
     public void setCookiesMap(Map<String, String> map) {
         this.cookies = map;
+        if(map != null){
+            System.out.println(map.entrySet());
+        }
     }
 
     @Override

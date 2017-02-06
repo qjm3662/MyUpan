@@ -15,7 +15,8 @@ public class UserEntity {
     private String nickname;
     private String signature;
     private int sex;
-    private Set<FileEntity> shares = new HashSet<FileEntity>();
+    private Set<FileEntity> shares = new HashSet<FileEntity>();     //分享过的文件
+    private Set<UserInfoConcernEntity> concern = new HashSet<UserInfoConcernEntity>();  //关注的人
 
     public Set<FileEntity> getShares() {
         return shares;
@@ -23,6 +24,14 @@ public class UserEntity {
 
     public void setShares(Set<FileEntity> shares) {
         this.shares = shares;
+    }
+
+    public Set<UserInfoConcernEntity> getConcern() {
+        return concern;
+    }
+
+    public void setConcern(Set<UserInfoConcernEntity> concern) {
+        this.concern = concern;
     }
 
     @Override

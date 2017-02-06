@@ -1,4 +1,4 @@
-package cn.qjm253.Action;
+package cn.qjm253.Controll;
 
 /**
  * Created by qjm3662 on 2017/1/23.
@@ -11,6 +11,10 @@ public class CodeMSG {
     public static final int FILE_SIZE_TO_LARGE_ERROR = -4;        //上传文件过大
     public static final int USERNAME_ALREADY_EXISTS = -5;       //用户名已存在
     public static final int USERNAME_NOT_EXISTS = -6;           //用户名不存在或传入的参数为空串
+    public static final int COOKIE_INVALID = -7;                //Cookie失效（登录失效）
+    public static final int PARAM_ERROR_FOLLOW = -8;             //没有传用户名或关注对象用户名
+    public static final int USER_OR_TARGET_NOT_EXIST = -9;      //用户不存在或关注对象不存在
+
 
     public static String getCodeMSG(int code){
         switch (code){
@@ -28,6 +32,12 @@ public class CodeMSG {
                 return "用户名已存在";
             case USERNAME_NOT_EXISTS:
                 return "用户名不存在或传入的参数为空串";
+            case COOKIE_INVALID:
+                return "Cookie失效（登录失效）";
+            case PARAM_ERROR_FOLLOW:
+                return "没有传用户名或关注对象用户名";
+            case USER_OR_TARGET_NOT_EXIST:
+                return "用户不存在或关注对象不存在";
             default:
                 return "默认信息";
         }

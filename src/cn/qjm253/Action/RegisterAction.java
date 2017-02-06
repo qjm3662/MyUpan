@@ -1,6 +1,8 @@
 package cn.qjm253.Action;
 
+import cn.qjm253.Controll.CodeMSG;
 import cn.qjm253.Controll.HibernateOperator;
+import cn.qjm253.Controll.UrlControl;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -65,7 +67,7 @@ public class RegisterAction extends ActionSupport{
     public String register() throws Exception{
         System.out.println("sex : " + getSex());
         setCode(HibernateOperator.registerJudge(username, password, 1));
-        setAvatar("http://192.168.1.15:8080/download?fileName=default_avatar.jpg");
+        setAvatar(UrlControl.default_avatar);
         setSex(1);      //默认为Man
         System.out.println(getAvatar());
         if(getCode() == CodeMSG.ALREADY_LOGIN){ //注册成功

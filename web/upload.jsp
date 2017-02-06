@@ -12,7 +12,7 @@
     <title>文件上传测试</title>
 </head>
 <body>
-<s:form action="UploadAction" enctype="multipart/form-data" method="post">
+<s:form action="upload" enctype="multipart/form-data" method="post">
     <s:textfield name="username" label="上传用户名"/><br/>
     <s:file name="file" label="选择文件"/><br/>
     <s:submit value="上传"/>

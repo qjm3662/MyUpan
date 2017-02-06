@@ -1,18 +1,21 @@
 package cn.qjm253.Action;
 
+import cn.qjm253.Controll.CodeMSG;
 import cn.qjm253.Entity.FileEntity;
 import cn.qjm253.Entity.UserEntity;
 import cn.qjm253.util.HibernateUtil;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.interceptor.CookiesAware;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * Created by qjm3662 on 2017/1/25.
  */
-public class GetUserInfoAction extends ActionSupport {
+public class GetUserInfoAction extends ActionSupport implements CookiesAware{
     private String username;
     private String avatar;
     private String nickname;
@@ -21,6 +24,25 @@ public class GetUserInfoAction extends ActionSupport {
     private int code;
     private String errMSG;
     private FileEntity[] shares;
+    private boolean isRelative;
+    private String visitor;
+    private Map<String, String> cookies;
+
+    public boolean isRelative() {
+        return isRelative;
+    }
+
+    public void setRelative(boolean relative) {
+        isRelative = relative;
+    }
+
+    public String getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(String visitor) {
+        this.visitor = visitor;
+    }
 
     public FileEntity[] getShares() {
         return shares;
@@ -144,5 +166,10 @@ public class GetUserInfoAction extends ActionSupport {
             HibernateUtil.closeSession();
             return CodeMSG.ALREADY_LOGIN;
         }
+    }
+
+    @Override
+    public void setCookiesMap(Map<String, String> map) {
+        this.cookies = map;
     }
 }

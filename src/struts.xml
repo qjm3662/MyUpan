@@ -31,6 +31,131 @@
         <!--使得该包全局可使用的通配符-->
         <global-allowed-methods> regex:.*</global-allowed-methods>
 
+        <!--下载配置-->
+        <action name="download" class="cn.qjm253.Action.FileDownloadAction">
+            <result name="success" type="stream">
+                <!--指定文件的下载类型-->
+                <param name="contentType">image/jpg</param>
+                <param name="inputName">targetFile</param>
+                <param name="contentDisposition">filename="fsdfg.jpg"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+        </action>
+
+        <!--修改用户信息配置、-->
+        <action name="ModifyUserInfoAction" class="cn.qjm253.Action.ModifyUserInfoAction" method="modifyUserInfo">
+            <result name="success" type="json">
+                <param name="includeProperties">
+                    code
+                </param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+
+        <!--上传文件配置-->
+        <action name="upload" class="cn.qjm253.Action.UploadAction" method="upload">
+            <!--配置fileUpload的拦截器-->
+            <interceptor-ref name="fileUpload">
+                <!--配置允许上传的文件类型-->
+                <param name="allowedTypes">*/*</param>
+                <!--配置允许上传的文件大小500MB-->
+                <param name="maximumSize">534288000</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+
+            <param name="savePath">/WEB-INF/upload</param>
+            <result name="success" type="json">
+                <param name="includeProperties">code, identifyCode</param>
+            </result>
+            <!--当上传文件的类型为不允许的类型时会返回以下结果-->
+            <result name="input" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+        </action>
+
+        <!--获取分享中心-->
+        <action name="share" class="cn.qjm253.Action.GetShareCenterAction" method="getShareCenter">
+            <interceptor-ref name="defaultStack"/>
+            <result name="success" type="json">
+                <param name="includeProperties">
+                    code,
+                    shares\[\d+\]\.id, shares\[\d+\]\.fileName, shares\[\d+\]\.fileSize,
+                    shares\[\d+\]\.identifyCode, shares\[\d+\]\.createTime, shares\[\d+\]\.updateTime,
+                    shares\[\d+\]\.isPublic, shares\[\d+\]\.downloadCount
+                </param>
+            </result>
+        </action>
+    </package>
+
+
+    <package name="cn.qjm253.user" extends="json-default" namespace="/user">
+        <interceptors>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="cookie">
+                    <param name="cookiesName">username</param>
+                    <param name="cookiesValue">*</param>
+                </interceptor-ref>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="myStack"/>
+
+
+        <!--使得该包全局可使用的通配符-->
+        <global-allowed-methods> regex:.*</global-allowed-methods>
+
+        <!--关注别人-->
+        <action name="follow" class="cn.qjm253.Action.FollowSBAction" method="followSb">
+            <result name="success" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+
+        <!--获取用户信息配置-->
+        <action name="GetUserInfoAction" class="cn.qjm253.Action.GetUserInfoAction" method="getUserInfo">
+            <result name="success" type="json">
+                <param name="includeProperties">username, avatar, nickname, signature, sex, code, shares\[\d+\]\.id, shares\[\d+\]\.fileName, shares\[\d+\]\.fileSize,
+                    shares\[\d+\]\.identifyCode, shares\[\d+\]\.createTime, shares\[\d+\]\.updateTime, shares\[\d+\]\.isPublic, shares\[\d+\]\.downloadCount
+                </param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+
+        <!--上传文件配置-->
+        <action name="upload" class="cn.qjm253.Action.UploadAction" method="upload">
+            <!--配置fileUpload的拦截器-->
+            <interceptor-ref name="fileUpload">
+                <!--配置允许上传的文件类型-->
+                <param name="allowedTypes">*/*</param>
+                <!--配置允许上传的文件大小500MB-->
+                <param name="maximumSize">534288000</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+
+            <param name="savePath">/WEB-INF/upload</param>
+            <result name="success" type="json">
+                <param name="includeProperties">code, identifyCode</param>
+            </result>
+            <!--当上传文件的类型为不允许的类型时会返回以下结果-->
+            <result name="input" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+        </action>
+
         <!--登录配置-->
         <action name="LoginAction" class="cn.qjm253.Action.LoginAction" method="login">
             <!--<interceptor-ref name="myStack"/>-->
@@ -51,54 +176,18 @@
                 <param name="includeProperties">code,errorMsg</param>
             </result>
         </action>
-
-        <!--下载配置-->
-        <action name="download" class="cn.qjm253.Action.FileDownloadAction">
-            <result name="success" type="stream">
-                <!--指定文件的下载类型-->
-                <param name="contentType">image/jpg</param>
-                <param name="inputName">targetFile</param>
-                <param name="contentDisposition">filename="fsdfg.jpg"</param>
-                <param name="bufferSize">4096</param>
-            </result>
-        </action>
-
-        <!--获取用户信息配置-->
-        <action name="GetUserInfoAction" class="cn.qjm253.Action.GetUserInfoAction" method="getUserInfo">
-            <result name="success" type="json">
-                <param name="includeProperties">username, avatar, nickname, signature, sex, code, shares\[\d+\]\.id, shares\[\d+\]\.fileName, shares\[\d+\]\.fileSize,
-                    shares\[\d+\]\.identifyCode, shares\[\d+\]\.createTime, shares\[\d+\]\.updateTime, shares\[\d+\]\.isPublic, shares\[\d+\]\.downloadCount
-                </param>
-            </result>
-            <result name="error" type="json">
-                <param name="includeProperties">code, errMSG</param>
-            </result>
-        </action>
-
-        <!--修改用户信息配置、-->
-        <action name="ModifyUserInfoAction" class="cn.qjm253.Action.ModifyUserInfoAction" method="modifyUserInfo">
-            <result name="success" type="json">
-                <param name="includeProperties">
-                    code
-                </param>
-            </result>
-            <result name="error" type="json">
-                <param name="includeProperties">code, errMSG</param>
-            </result>
-        </action>
-
         <!--上传文件配置-->
-        <action name="UploadAction" class="cn.qjm253.Action.UploadAction" method="upload">
+        <action name="modifyAvatar" class="cn.qjm253.Action.ModifyUserAvatarAction" method="modifyAvatar">
             <!--配置fileUpload的拦截器-->
             <interceptor-ref name="fileUpload">
-                <!--配置允许上传的文件类型-->
-                <param name="allowedTypes">*/*</param>
-                <!--配置允许上传的文件大小500MB-->
-                <param name="maximumSize">534288000</param>
+                <!--配置允许上传的文件类型(图片)-->
+                <param name="allowedTypes">image/*</param>
+                <!--配置允许上传的头像大小200KB-->
+                <param name="maximumSize">204800</param>
             </interceptor-ref>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="myStack"/>
 
-            <param name="savePath">/WEB-INF/upload</param>
+            <param name="savePath">/src/avatar</param>
             <result name="success" type="json">
                 <param name="includeProperties">code</param>
             </result>
@@ -107,27 +196,14 @@
                 <param name="includeProperties">code, errMSG</param>
             </result>
             <result name="error" type="json">
-                <param name="includeProperties">code</param>
-            </result>
-        </action>
-        <action name="testAction" class="Test.TestAction" method="test">
-            <result type="json">
-                <param name="includeProperties">session</param>
+                <param name="includeProperties">code，errMSG</param>
             </result>
         </action>
     </package>
 
 
+    <!--文件下载包-->
     <package name="cn.qjm253.download" extends="json-default" namespace="/download">
-        <!--<interceptors>-->
-            <!--<interceptor-stack name="myStack">-->
-                <!--<interceptor-ref name="cookie">-->
-                    <!--<param name="cookiesName">username</param>-->
-                    <!--<param name="cookiesValue">*</param>-->
-                <!--</interceptor-ref>-->
-                <!--<interceptor-ref name="defaultStack"/>-->
-            <!--</interceptor-stack>-->
-        <!--</interceptors>-->
         <action name="*" class="cn.qjm253.Action.FileDownloadAction">
             <!--<interceptor-ref name="myStack"/>-->
             <result name="success" type="stream">
@@ -140,6 +216,8 @@
         </action>
     </package>
 
+
+    <!--获取文件信息包-->
     <package name="cn.qjm253.getUserInfo" extends="json-default" namespace="/GetFileInfoAction">
         <interceptors>
             <interceptor-stack name="myStack">

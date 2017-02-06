@@ -32,5 +32,6 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping resource="cn/qjm253/Entity/FileEntity.hbm.xml"/>
         <mapping resource="cn/qjm253/Entity/UserEntity.hbm.xml"/>
+        <mapping resource="cn/qjm253/Entity/UserInfoConcernEntity.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

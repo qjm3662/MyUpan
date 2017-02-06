@@ -1,23 +1,28 @@
 package cn.qjm253.Action;
 
+import cn.qjm253.Controll.CodeMSG;
 import cn.qjm253.Entity.UserEntity;
 import cn.qjm253.util.HibernateUtil;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.CookiesAware;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by qjm3662 on 2017/1/31.
  */
-public class ModifyUserInfoAction extends ActionSupport {
+public class ModifyUserInfoAction extends ActionSupport implements CookiesAware{
     private String username;
     private String nickname;
     private int sex;
     private String signature;
     private int code;
     private String errMSG;
+    private Map<String, String> cookies;
 
     public String getUsername() {
         return username;
@@ -68,9 +73,18 @@ public class ModifyUserInfoAction extends ActionSupport {
     }
 
     public String modifyUserInfo() throws Exception {
-        if (getUsername() == null || getUsername().equals("")) {  //传入的参数
-            setCode(CodeMSG.USERNAME_NOT_EXISTS);
+        //如果用户没有传入username参数，尝试从cookies中获得
+        if(getUsername() == null || getUsername().equals("")){
+            setUsername(cookies.get("username"));
         }
+
+        //既没有传入username，cookies中又不存在username或已失效
+        if(getUsername() == null){
+            setCode(CodeMSG.USERNAME_NOT_EXISTS);
+            setErrMSG(CodeMSG.getCodeMSG(getCode()) + " 或 " + CodeMSG.getCodeMSG(CodeMSG.COOKIE_INVALID));
+            return ERROR;
+        }
+
         Session session = HibernateUtil.currentSession();
         Transaction t = session.beginTransaction();
         List list = session.createQuery("from UserEntity u where u.username = :usn")
@@ -90,5 +104,10 @@ public class ModifyUserInfoAction extends ActionSupport {
         t.commit();
         HibernateUtil.closeSession();
         return SUCCESS;
+    }
+
+    @Override
+    public void setCookiesMap(Map<String, String> map) {
+        this.cookies = map;
     }
 }

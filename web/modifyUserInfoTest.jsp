@@ -12,7 +12,7 @@
     <title>修改用户信息</title>
 </head>
 <body>
-<s:form action="ModifyUserInfoAction" method="POST">
+<s:form action="ModifyUserInfoAction"  method="POST">
     <s:textfield name="username" value="用户名"/>
     <s:textfield name="nickname" value="昵称"/>
     <s:textfield name="sex" value="性别"/>

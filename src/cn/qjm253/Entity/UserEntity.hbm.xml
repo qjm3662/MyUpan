@@ -36,5 +36,10 @@
             <key column="owner_id"/>
             <one-to-many class="cn.qjm253.Entity.FileEntity"/>
         </set>
+        <set name="concern" inverse="true">
+            <key column="concern_id"/>
+            <one-to-many class="cn.qjm253.Entity.UserInfoConcernEntity"/>
+        </set>
+
     </class>
 </hibernate-mapping>
