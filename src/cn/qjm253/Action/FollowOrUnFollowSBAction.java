@@ -8,7 +8,7 @@ import com.sun.org.apache.bcel.internal.classfile.Code;
 /**
  * Created by qjm3662 on 2017/2/4.
  */
-public class FollowSBAction extends ActionSupport{
+public class FollowOrUnFollowSBAction extends ActionSupport{
     private int code;
     private String errMSG;
     private String myselfName;      //待操作的用户
@@ -46,6 +46,11 @@ public class FollowSBAction extends ActionSupport{
         this.otherName = otherName;
     }
 
+    /**
+     * 关注某人
+     * @return
+     * @throws Exception
+     */
     public String followSb() throws Exception{
         if(getMyselfName() == null || getOtherName() == null || getMyselfName().equals("") || getOtherName().equals("")){
             setCode(CodeMSG.PARAM_ERROR_FOLLOW);
@@ -53,6 +58,30 @@ public class FollowSBAction extends ActionSupport{
             return ERROR;
         }
         int result = HibernateOperator.followSb(getMyselfName(), getOtherName());
+        return resultDeal(result);
+    }
+
+    /**
+     * 取消关注某人
+     * @return
+     * @throws Exception
+     */
+    public String unFollowSb() throws Exception{
+        if(getMyselfName() == null || getOtherName() == null || getMyselfName().equals("") || getOtherName().equals("")){
+            setCode(CodeMSG.PARAM_ERROR_FOLLOW);
+            setErrMSG(CodeMSG.getCodeMSG(getCode()));
+            return ERROR;
+        }
+        int result = HibernateOperator.unFollowSb(getMyselfName(), getOtherName());
+        return resultDeal(result);
+    }
+
+    /**
+     * 结果处理函数
+     * @param result
+     * @return
+     */
+    private String resultDeal(int result){
         if(result > 0){
             setCode(0);
             return SUCCESS;

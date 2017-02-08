@@ -18,7 +18,7 @@ public class HibernateOperator {
     private static FileEntity[] shareCenter;
 
     /**
-     * 注册判断
+     * ע���ж�
      *
      * @param username
      * @param password
@@ -32,16 +32,16 @@ public class HibernateOperator {
         List list = session.createQuery("from UserEntity u where u.username = :usn")
                 .setParameter("usn", username)
                 .list();
-        if (list.size() == 0) {   //数据库中没有对应数据，即该用户名没有被注册
+        if (list.size() == 0) {   //���ݿ���û�ж�Ӧ���ݣ������û���û�б�ע��
             UserEntity newUser = new UserEntity();
             newUser.setUsername(username);
             newUser.setPassword(password);
             newUser.setSex(sex);
             newUser.setAvatar("http://192.168.1.15:8080/download?fileName=default_avatar.jpg");
             newUser.setNickname(username);
-            newUser.setSignature("优云，所想即所得&");
+            newUser.setSignature("���ƣ���������&");
             session.save(newUser);
-//            FileEntity fileEntity = new FileEntity("《想你所想》", 1024, "347211", System.currentTimeMillis(), System.currentTimeMillis(), newUser, (byte) 1);
+//            FileEntity fileEntity = new FileEntity("���������롷", 1024, "347211", System.currentTimeMillis(), System.currentTimeMillis(), newUser, (byte) 1);
 //            session.persist(fileEntity);
             t.commit();
             HibernateUtil.closeSession();
@@ -54,7 +54,7 @@ public class HibernateOperator {
     }
 
     /**
-     * 登录判断
+     * ��¼�ж�
      *
      * @param username
      * @param password
@@ -84,7 +84,7 @@ public class HibernateOperator {
     }
 
     /**
-     * 文件信息持久化
+     * �ļ���Ϣ�־û�
      * @param fileName
      * @param fileSize
      * @param isPublic
@@ -94,17 +94,17 @@ public class HibernateOperator {
     public static String saveFile(String fileName, String saveName, double fileSize, byte isPublic, String username) {
         Session session = HibernateUtil.currentSession();
         Transaction t = session.beginTransaction();
-        System.out.println("开始保存");
+        System.out.println("��ʼ����");
         List list = session.createQuery("from UserEntity u where u.username = :usn")
                 .setParameter("usn", username)
                 .list();
-        if (list.size() == 0) {     //不存在的用户上传变成非登录上传
+        if (list.size() == 0) {     //�����ڵ��û��ϴ���ɷǵ�¼�ϴ�
             list = session.createQuery("from UserEntity u where u.username = :usn")
                     .setParameter("usn", "Robbin")
                     .list();
         }
         String identifyCode = UUIDUtil.getRandomString(6);
-        UserEntity user = (UserEntity) list.get(0);     //获得保存非登录上传文件的默认对象
+        UserEntity user = (UserEntity) list.get(0);     //��ñ���ǵ�¼�ϴ��ļ���Ĭ�϶���
         FileEntity fileEntity = new FileEntity(fileName, fileSize, identifyCode, System.currentTimeMillis(), System.currentTimeMillis(),
                 user, isPublic, saveName);
         session.persist(fileEntity);
@@ -114,7 +114,7 @@ public class HibernateOperator {
     }
 
     /**
-     * 根据提取码获取文件对象
+     * ������ȡ���ȡ�ļ�����
      * @param identifyCode
      * @param where 1->download  2->getFileInfo
      * @return
@@ -131,7 +131,7 @@ public class HibernateOperator {
             return null;
         }else{
             FileEntity fileEntity = (FileEntity) list.get(0);
-            if(where == 1){     //下载是才增加下载数
+            if(where == 1){     //�����ǲ�����������
                 fileEntity.setDownloadCount(fileEntity.getDownloadCount() + 1);
             }
             t.commit();
@@ -142,7 +142,7 @@ public class HibernateOperator {
 
 
     /**
-     * 根据提取码获取文件在服务器保存的真实名字
+     * ������ȡ���ȡ�ļ��ڷ������������ʵ����
      * @param identifyCode
      * @return
      */
@@ -157,10 +157,10 @@ public class HibernateOperator {
 
 
     /**
-     * 更改用户头像的持久化信息
-     * @param username  要更改头像的用户
-     * @param avatarUrl 新的头像url
-     * @return 返回是否修改成功
+     * �����û�ͷ��ĳ־û���Ϣ
+     * @param username  Ҫ����ͷ����û�
+     * @param avatarUrl �µ�ͷ��url
+     * @return �����Ƿ��޸ĳɹ�
      */
     public static boolean modifyAvatar(String username, String avatarUrl){
         Session session = HibernateUtil.currentSession();
@@ -175,13 +175,19 @@ public class HibernateOperator {
         }
         UserEntity userEntity = (UserEntity) list.get(0);
         userEntity.setAvatar(avatarUrl);
+        List l_followInfo = session.createQuery("from UserInfoConcernEntity uc where uc.username = :usn")
+                .setParameter("usn", username)
+                .list();
+        for(Object uc : l_followInfo){ //ͬʱ�޸ĸ��û�����ע����Ϣ
+            ((UserInfoConcernEntity)uc).setAvatar(avatarUrl);
+        }
         t.commit();
         HibernateUtil.closeSession();
         return true;
     }
 
     /**
-     * 获取分享中心
+     * ��ȡ��������
      * @return
      */
     public static FileEntity[] getShareCenter() {
@@ -198,9 +204,26 @@ public class HibernateOperator {
     }
 
     /**
-     * 关注用户
-     * @param username      待操作的用户名
-     * @param targetName    要关注的对象名
+     * ��ȡ��ע������Ϣ
+     * @param username
+     * @return
+     */
+    public static UserInfoConcernEntity[] getFollowInfo(String username) {
+        Session session = HibernateUtil.currentSession();
+        List l_user = session.createQuery("from UserEntity u where u.username = :usn")
+                .setParameter("usn", username)
+                .list();
+        if(l_user.size() == 0){
+            return null;
+        } else{
+            return ((UserEntity)l_user.get(0)).getConcern().toArray(new UserInfoConcernEntity[]{});
+        }
+    }
+
+    /**
+     * ��ע�û�
+     * @param username      ���������û���
+     * @param targetName    Ҫ��ע�Ķ�����
      * @return  -1->username not exist       1->follow info already exist
      *           -2->targetName not exist     2->add follow info success
      */
@@ -219,7 +242,7 @@ public class HibernateOperator {
         if(session.createQuery("from UserInfoConcernEntity uc where uc.username = :usn and uc.concernMe.id = :id")
                 .setParameter("usn", targetName)
                 .setParameter("id", user.getId())
-                .list().size() != 0){       //关注信息数据库已经有了，不再重复添加
+                .list().size() != 0){       //����ע��Ϣ���ݿ��Ѿ����ˣ������ظ����
             t.commit();
             HibernateUtil.closeSession();
            return 1;
@@ -242,9 +265,9 @@ public class HibernateOperator {
     }
 
     /**
-     * 取消关注某人
-     * @param username      待操作的用户名
-     * @param targetName    要取消关注的对象
+     * ȡ����עĳ��
+     * @param username      ���������û���
+     * @param targetName    Ҫȡ����ע�Ķ���
      * @return      -1->username not exist       1->delete follow info success
      *           -2->follow info not exist
      */

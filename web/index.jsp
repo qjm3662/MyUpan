@@ -11,9 +11,10 @@
     <title>$Title$</title>
 </head>
 <body>
-  <a href="modifyUserInfoTest.jsp">修改用户信息测试</a><br/>
-  <a href="upload.jsp">上传文件测试</a><br/>
-  <a href="modifyUserAvatar.jsp">修改用户头像测试</a>
-  <a href="followTest.jsp">关注测试</a>
+    <a href="modifyUserInfoTest.jsp">修改用户信息测试</a><br/>
+    <a href="upload.jsp">上传文件测试</a><br/>
+    <a href="modifyUserAvatar.jsp">修改用户头像测试</a>
+    <a href="followTest.jsp">关注测试</a>
+    <a href="unFollowTest.jsp">取消关注测试</a>
 </body>
 </html>

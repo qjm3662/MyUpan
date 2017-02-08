@@ -111,7 +111,7 @@
         <global-allowed-methods> regex:.*</global-allowed-methods>
 
         <!--关注别人-->
-        <action name="follow" class="cn.qjm253.Action.FollowSBAction" method="followSb">
+        <action name="follow" class="cn.qjm253.Action.FollowOrUnFollowSBAction" method="followSb">
             <result name="success" type="json">
                 <param name="includeProperties">code</param>
             </result>
@@ -120,6 +120,28 @@
             </result>
         </action>
 
+        <!--取消关注别人-->
+        <action name="unFollow" class="cn.qjm253.Action.FollowOrUnFollowSBAction" method="unFollowSb">
+            <result name="success" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+        
+        <!--获取关注的人-->
+        <action name="followInfo" class="cn.qjm253.Action.GetFollowInfoAction" method="getFollowInfo">
+            <result name="success" type="json">
+                <param name="includeProperties">
+                    code, follows\[\d+\]\.username, follows\[\d+\]\.nickname,
+                    follows\[\d+\]\.sex, follows\[\d+\]\.signature, follows\[\d+\]\.avatar
+                </param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
         <!--获取用户信息配置-->
         <action name="GetUserInfoAction" class="cn.qjm253.Action.GetUserInfoAction" method="getUserInfo">
             <result name="success" type="json">

@@ -2,6 +2,7 @@ package cn.qjm253.Action;
 
 import cn.qjm253.Controll.CodeMSG;
 import cn.qjm253.Entity.UserEntity;
+import cn.qjm253.Entity.UserInfoConcernEntity;
 import cn.qjm253.util.HibernateUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
@@ -96,6 +97,16 @@ public class ModifyUserInfoAction extends ActionSupport implements CookiesAware{
         if(getCode() != 0){
             setErrMSG(CodeMSG.getCodeMSG(getCode()));
             return ERROR;
+        }
+        List l_followInfo = session.createQuery("from UserInfoConcernEntity uc where uc.username = :usn")
+                .setParameter("usn", getUsername())
+                .list();
+        //修改对应的信息
+        for(Object uc : l_followInfo){
+            UserInfoConcernEntity uce = (UserInfoConcernEntity) uc;
+            uce.setSex(getSex());
+            uce.setNickname(getNickname());
+            uce.setSignature(getSignature());
         }
         UserEntity user = (UserEntity) list.get(0);
         user.setSex(getSex());
