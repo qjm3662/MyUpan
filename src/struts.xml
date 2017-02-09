@@ -42,17 +42,6 @@
             </result>
         </action>
 
-        <!--修改用户信息配置、-->
-        <action name="ModifyUserInfoAction" class="cn.qjm253.Action.ModifyUserInfoAction" method="modifyUserInfo">
-            <result name="success" type="json">
-                <param name="includeProperties">
-                    code
-                </param>
-            </result>
-            <result name="error" type="json">
-                <param name="includeProperties">code, errMSG</param>
-            </result>
-        </action>
 
         <!--上传文件配置-->
         <action name="upload" class="cn.qjm253.Action.UploadAction" method="upload">
@@ -90,6 +79,18 @@
                 </param>
             </result>
         </action>
+
+        <!--获取用户信息配置-->
+        <action name="GetUserInfoAction" class="cn.qjm253.Action.GetUserInfoAction" method="getUserInfo">
+            <result name="success" type="json">
+                <param name="includeProperties">username, avatar, nickname, signature, sex, code, relative, shares\[\d+\]\.id, shares\[\d+\]\.fileName, shares\[\d+\]\.fileSize,
+                    shares\[\d+\]\.identifyCode, shares\[\d+\]\.createTime, shares\[\d+\]\.updateTime, shares\[\d+\]\.isPublic, shares\[\d+\]\.downloadCount
+                </param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
     </package>
 
 
@@ -109,6 +110,18 @@
 
         <!--使得该包全局可使用的通配符-->
         <global-allowed-methods> regex:.*</global-allowed-methods>
+
+        <!--修改用户信息配置、-->
+        <action name="ModifyUserInfoAction" class="cn.qjm253.Action.ModifyUserInfoAction" method="modifyUserInfo">
+            <result name="success" type="json">
+                <param name="includeProperties">
+                    code
+                </param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
 
         <!--关注别人-->
         <action name="follow" class="cn.qjm253.Action.FollowOrUnFollowSBAction" method="followSb">
@@ -142,17 +155,9 @@
                 <param name="includeProperties">code, errMSG</param>
             </result>
         </action>
-        <!--获取用户信息配置-->
-        <action name="GetUserInfoAction" class="cn.qjm253.Action.GetUserInfoAction" method="getUserInfo">
-            <result name="success" type="json">
-                <param name="includeProperties">username, avatar, nickname, signature, sex, code, shares\[\d+\]\.id, shares\[\d+\]\.fileName, shares\[\d+\]\.fileSize,
-                    shares\[\d+\]\.identifyCode, shares\[\d+\]\.createTime, shares\[\d+\]\.updateTime, shares\[\d+\]\.isPublic, shares\[\d+\]\.downloadCount
-                </param>
-            </result>
-            <result name="error" type="json">
-                <param name="includeProperties">code, errMSG</param>
-            </result>
-        </action>
+
+
+
 
         <!--上传文件配置-->
         <action name="upload" class="cn.qjm253.Action.UploadAction" method="upload">
@@ -198,6 +203,27 @@
                 <param name="includeProperties">code,errorMsg</param>
             </result>
         </action>
+
+        <!--修改密码配置-->
+        <action name="revisePSD" class="cn.qjm253.Action.RevisePSDAction" method="revisePsd">
+            <result name="success" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+
+        <!--用户反馈配置-->
+        <action name="feedback" class="cn.qjm253.Action.FeedBackAction" method="feedback">
+            <result name="success" type="json">
+                <param name="includeProperties">code</param>
+            </result>
+            <result name="error" type="json">
+                <param name="includeProperties">code, errMSG</param>
+            </result>
+        </action>
+
         <!--上传文件配置-->
         <action name="modifyAvatar" class="cn.qjm253.Action.ModifyUserAvatarAction" method="modifyAvatar">
             <!--配置fileUpload的拦截器-->

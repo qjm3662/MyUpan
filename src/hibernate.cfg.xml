@@ -8,9 +8,9 @@
         <!--指定链接数据库所用的驱动-->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <!--指定链接数据库的url-->
-        <property name="connection.url">jdbc:mysql://115.28.85.116:3030/my_upan?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;serverTimezone=UTC</property>
+        <property name="connection.url">jdbc:mysql://123.207.96.66:3306/my_upan?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;serverTimezone=UTC</property>
         <property name="connection.username">root</property>
-        <property name="connection.password">123456</property>
+        <property name="connection.password">ilove456789</property>
 
         <!--指定连接池里的最大连接数-->
         <property name="hibernate.c3p0.max_size">20</property>
@@ -33,5 +33,6 @@
         <mapping resource="cn/qjm253/Entity/FileEntity.hbm.xml"/>
         <mapping resource="cn/qjm253/Entity/UserEntity.hbm.xml"/>
         <mapping resource="cn/qjm253/Entity/UserInfoConcernEntity.hbm.xml"/>
+        <mapping resource="cn/qjm253/Entity/FeedbackEntity.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

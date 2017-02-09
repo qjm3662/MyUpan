@@ -14,6 +14,7 @@ public class CodeMSG {
     public static final int COOKIE_INVALID = -7;                //Cookie失效（登录失效）
     public static final int PARAM_ERROR_FOLLOW = -8;             //没有传用户名或关注对象用户名
     public static final int USER_OR_TARGET_NOT_EXIST = -9;      //用户不存在或关注对象不存在
+    public static final int PASSWORD_ERROR = -10;               //密码错误
 
 
     public static String getCodeMSG(int code){
@@ -38,6 +39,8 @@ public class CodeMSG {
                 return "没有传用户名或关注对象用户名";
             case USER_OR_TARGET_NOT_EXIST:
                 return "用户不存在或关注对象不存在";
+            case PASSWORD_ERROR:
+                return "密码错误";
             default:
                 return "默认信息";
         }
