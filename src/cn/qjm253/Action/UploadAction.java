@@ -104,7 +104,7 @@ public class UploadAction extends ActionSupport{
         String path = ServletActionContext.getServletContext().getRealPath(getSavePath());
         String saveName = UUIDUtil.addUUID(getFileFileName());
         //以服务器的文件保存地址和原文件名建立上传文件输出流
-        FileOutputStream fos = new FileOutputStream( path + "\\" + saveName);
+        FileOutputStream fos = new FileOutputStream( path + "/" + saveName);
         FileInputStream fis = new FileInputStream(getFile());
         byte[] buffer = new byte[1024];
         int len = 0;

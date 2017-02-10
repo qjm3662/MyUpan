@@ -101,9 +101,9 @@ public class ModifyUserAvatarAction extends ActionSupport implements CookiesAwar
 
         String path = ServletActionContext.getServletContext().getRealPath(getSavePath());
         String saveName = getUsername() + "-avatar";
-        FileOutputStream fos = new FileOutputStream(path + "\\" + saveName);
+        FileOutputStream fos = new FileOutputStream(path + "/" + saveName);
         FileInputStream fis = new FileInputStream(getAvatar());
-        System.out.println(path + "\\" + saveName);
+        System.out.println(path + "/" + saveName);
         byte[] buffer = new byte[1024];
         int len = 0;
         int fileSize = 0;
